@@ -1,5 +1,6 @@
 application.properties
 pom.xml
+JWT_CONSTANT
 
 HELP.md
 target/

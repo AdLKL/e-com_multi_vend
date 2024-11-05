@@ -1,4 +1,7 @@
 package com.ad.ecommerceMultivBackend.service;
 
-public class AuthService {
+import com.ad.ecommerceMultivBackend.request.SignupRequest;
+
+public interface AuthService {
+    String createUser(SignupRequest req);
 }
