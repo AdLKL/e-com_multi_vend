@@ -1,8 +1,11 @@
 package com.ad.ecommerceMultivBackend.controller;
 
+import com.ad.ecommerceMultivBackend.domain.USER_ROLE;
 import com.ad.ecommerceMultivBackend.model.User;
 import com.ad.ecommerceMultivBackend.repository.UserRepository;
 import com.ad.ecommerceMultivBackend.request.SignupRequest;
+import com.ad.ecommerceMultivBackend.response.AuthResponse;
+import com.ad.ecommerceMultivBackend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,15 +19,16 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
 
     private final UserRepository userRepository;
+    private final AuthService authService;
 
-    @PostMapping
-    public ResponseEntity<User> createUserHandler(@RequestBody SignupRequest req) {
-        User user = new User();
-        user.setFullName(req.getFullName());
-        user.setEmail(req.getEmail());
+    @PostMapping("/signup")
+    public ResponseEntity<AuthResponse> createUserHandler(@RequestBody SignupRequest req) {
+        String jwt = authService.createUser(req);
+        AuthResponse res = new AuthResponse();
+        res.setJwt(jwt);
+        res.setMessage("Registered Successfully");
+        res.setRole(USER_ROLE.ROLE_CUSTOMER);
 
-        User savedUser = userRepository.save(user);
-
-        return ResponseEntity.ok(savedUser);
+        return ResponseEntity.ok(res);
     }
 }
