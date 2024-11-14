@@ -1,17 +1,15 @@
 package com.ad.ecommerceMultivBackend.controller;
 
 import com.ad.ecommerceMultivBackend.domain.USER_ROLE;
-import com.ad.ecommerceMultivBackend.model.VerificationCode;
+import com.ad.ecommerceMultivBackend.request.LoginOtpRequest;
+import com.ad.ecommerceMultivBackend.request.LoginRequest;
 import com.ad.ecommerceMultivBackend.request.SignupRequest;
 import com.ad.ecommerceMultivBackend.response.ApiResponse;
 import com.ad.ecommerceMultivBackend.response.AuthResponse;
 import com.ad.ecommerceMultivBackend.service.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/auth")
@@ -32,11 +30,17 @@ public class AuthController {
     }
 
     @PostMapping("/sent/login-otp")
-    public ResponseEntity<ApiResponse> sentOtpHandler(@RequestBody VerificationCode req) throws Exception {
-        authService.sendLoginOtp(req.getEmail());
+    public ResponseEntity<ApiResponse> sentOtpHandler(@RequestBody LoginOtpRequest req) throws Exception {
+        authService.sendLoginOtp(req.getEmail(), req.getRole());
         ApiResponse apiResponse = new ApiResponse();
         apiResponse.setMessage("Otp sent successfully");
 
         return ResponseEntity.ok(apiResponse);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> loginHandler(@RequestBody LoginRequest req) throws Exception {
+        AuthResponse res = authService.login(req);
+        return ResponseEntity.ok(res);
     }
 }
