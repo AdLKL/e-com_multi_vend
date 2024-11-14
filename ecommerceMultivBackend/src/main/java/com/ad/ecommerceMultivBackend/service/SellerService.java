@@ -1,6 +1,7 @@
 package com.ad.ecommerceMultivBackend.service;
 
 import com.ad.ecommerceMultivBackend.domain.AccountStatus;
+import com.ad.ecommerceMultivBackend.exception.SellerException;
 import com.ad.ecommerceMultivBackend.model.Seller;
 
 import java.util.List;
@@ -10,7 +11,7 @@ public interface SellerService {
 
     Seller createSeller(Seller seller) throws Exception;
 
-    Seller getSellerById(Long id) throws Exception;
+    Seller getSellerById(Long id) throws SellerException;
 
     Seller getSellerByEmail(String email) throws Exception;
 

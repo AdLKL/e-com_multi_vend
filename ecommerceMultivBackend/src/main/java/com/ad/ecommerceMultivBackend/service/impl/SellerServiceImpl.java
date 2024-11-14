@@ -3,6 +3,7 @@ package com.ad.ecommerceMultivBackend.service.impl;
 import com.ad.ecommerceMultivBackend.config.JwtProvider;
 import com.ad.ecommerceMultivBackend.domain.AccountStatus;
 import com.ad.ecommerceMultivBackend.domain.USER_ROLE;
+import com.ad.ecommerceMultivBackend.exception.SellerException;
 import com.ad.ecommerceMultivBackend.model.Address;
 import com.ad.ecommerceMultivBackend.model.Seller;
 import com.ad.ecommerceMultivBackend.repository.AddressRepository;
@@ -51,8 +52,8 @@ public class SellerServiceImpl implements SellerService {
     }
 
     @Override
-    public Seller getSellerById(Long id) throws Exception {
-        return sellerRepository.findById(id).orElseThrow(() -> new Exception("Seller isn't found with this id " + id) );
+    public Seller getSellerById(Long id) throws SellerException {
+        return sellerRepository.findById(id).orElseThrow(() -> new SellerException("Seller isn't found with this id " + id) );
     }
 
     @Override
