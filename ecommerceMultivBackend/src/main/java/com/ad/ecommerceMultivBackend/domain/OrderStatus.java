@@ -1,4 +1,4 @@
-package com.ad.ecommerceMultivBackend.model;
+package com.ad.ecommerceMultivBackend.domain;
 
 public enum OrderStatus {
     PENDING,

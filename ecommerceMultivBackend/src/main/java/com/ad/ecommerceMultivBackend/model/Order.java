@@ -1,5 +1,6 @@
 package com.ad.ecommerceMultivBackend.model;
 
+import com.ad.ecommerceMultivBackend.domain.OrderStatus;
 import com.ad.ecommerceMultivBackend.domain.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.*;
