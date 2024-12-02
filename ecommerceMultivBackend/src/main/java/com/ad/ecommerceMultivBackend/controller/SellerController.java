@@ -3,12 +3,14 @@ package com.ad.ecommerceMultivBackend.controller;
 import com.ad.ecommerceMultivBackend.config.JwtProvider;
 import com.ad.ecommerceMultivBackend.domain.AccountStatus;
 import com.ad.ecommerceMultivBackend.model.Seller;
+import com.ad.ecommerceMultivBackend.model.SellerReport;
 import com.ad.ecommerceMultivBackend.model.VerificationCode;
 import com.ad.ecommerceMultivBackend.repository.VerificationCodeRepository;
 import com.ad.ecommerceMultivBackend.request.LoginRequest;
 import com.ad.ecommerceMultivBackend.response.AuthResponse;
 import com.ad.ecommerceMultivBackend.service.AuthService;
 import com.ad.ecommerceMultivBackend.service.EmailService;
+import com.ad.ecommerceMultivBackend.service.SellerReportService;
 import com.ad.ecommerceMultivBackend.service.SellerService;
 import com.ad.ecommerceMultivBackend.util.OtpUtil;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +28,7 @@ public class SellerController {
     private final AuthService authService;
     private final VerificationCodeRepository verificationCodeRepository;
     private final EmailService emailService;
-    private final JwtProvider jwtProvider;
+    private final SellerReportService sellerReportService;
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> loginSeller(@RequestBody LoginRequest req) throws Exception {
@@ -78,11 +80,12 @@ public class SellerController {
         return new ResponseEntity<>(seller, HttpStatus.OK);
     }
 
-    //@GetMapping("/report")
-    //public ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception {
-    //    Seller seller = sellerService.getSellerProfile(jwt);
-    //    SellerReport report = sellerRe
-    //}
+    @GetMapping("/report")
+    public ResponseEntity<SellerReport> getSellerReport(@RequestHeader("Authorization") String jwt) throws Exception {
+        Seller seller = sellerService.getSellerProfile(jwt);
+        SellerReport sellerReport = sellerReportService.getSellerReport(seller);
+        return new ResponseEntity<>(sellerReport, HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<List<Seller>> getAllSellers(@RequestParam(required = false) AccountStatus status) throws Exception {

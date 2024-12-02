@@ -2,11 +2,9 @@ package com.ad.ecommerceMultivBackend.controller;
 
 import com.ad.ecommerceMultivBackend.domain.PaymentMethod;
 import com.ad.ecommerceMultivBackend.model.*;
+import com.ad.ecommerceMultivBackend.repository.SellerReportRepository;
 import com.ad.ecommerceMultivBackend.response.PaymentLinkResponse;
-import com.ad.ecommerceMultivBackend.service.CartService;
-import com.ad.ecommerceMultivBackend.service.OrderService;
-import com.ad.ecommerceMultivBackend.service.SellerService;
-import com.ad.ecommerceMultivBackend.service.UserService;
+import com.ad.ecommerceMultivBackend.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +21,7 @@ public class OrderController {
     private final UserService userService;
     private final CartService cartService;
     private final SellerService sellerService;
+    private final SellerReportService sellerReportService;
 
     @PostMapping
     public ResponseEntity<PaymentLinkResponse> createOrderHandler(
@@ -73,7 +72,10 @@ public class OrderController {
         Order order = orderService.cancelOrder(orderId, user);
 
         Seller seller = sellerService.getSellerById(order.getSellerId());
-        //SellerReport report = sellerReportService.getSellerReport(seller);
+        SellerReport report = sellerReportService.getSellerReport(seller);
+        report.setCanceledOrders(report.getCanceledOrders()+1);
+        report.setTotalRefunds(report.getTotalRefunds()+order.getTotalSellingPrice());
+        sellerReportService.updateSellerReport(report);
 
         return ResponseEntity.ok(order);
     }
