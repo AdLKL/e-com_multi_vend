@@ -2,7 +2,6 @@ package com.ad.ecommerceMultivBackend.controller;
 
 import com.ad.ecommerceMultivBackend.domain.PaymentMethod;
 import com.ad.ecommerceMultivBackend.model.*;
-import com.ad.ecommerceMultivBackend.repository.SellerReportRepository;
 import com.ad.ecommerceMultivBackend.response.PaymentLinkResponse;
 import com.ad.ecommerceMultivBackend.service.*;
 import lombok.RequiredArgsConstructor;
@@ -22,6 +21,7 @@ public class OrderController {
     private final CartService cartService;
     private final SellerService sellerService;
     private final SellerReportService sellerReportService;
+    private final PaymentService paymentService;
 
     @PostMapping
     public ResponseEntity<PaymentLinkResponse> createOrderHandler(
@@ -33,10 +33,14 @@ public class OrderController {
         Cart cart = cartService.findUserCart(user);
         Set<Order> orders = orderService.createOrder(user, shippingAddress, cart);
 
-        //PaymentOrder paymentOrder = paymentService.createOrder(user, orders);
+        PaymentOrder paymentOrder = paymentService.createOrder(user, orders);
 
         PaymentLinkResponse res = new PaymentLinkResponse();
 
+        if(paymentMethod.equals(PaymentMethod.STRIPE)) {
+            String paymentUrl = paymentService.createStripePaymentLink(user, paymentOrder.getAmount(), paymentOrder.getId());
+            res.setPaymentLinkUrl(paymentUrl);
+        }
         return new ResponseEntity<>(res, HttpStatus.OK);
     }
 
@@ -49,17 +53,15 @@ public class OrderController {
     }
 
     @GetMapping("/{orderId}")
-    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId, @RequestHeader("Authorization") String jwt)
+    public ResponseEntity<Order> getOrderById(@PathVariable Long orderId)
         throws Exception {
-        User user = userService.findUserByJwt(jwt);
         Order order = orderService.findOrderById(orderId);
         return new ResponseEntity<>(order, HttpStatus.ACCEPTED);
     }
 
     @GetMapping("/item/{orderItemId}")
-    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long orderItemId, @RequestHeader("Authorization") String jwt)
+    public ResponseEntity<OrderItem> getOrderItemById(@PathVariable Long orderItemId)
             throws Exception {
-        User user = userService.findUserByJwt(jwt);
         OrderItem orderItem = orderService.getOrderItemById(orderItemId);
         return new ResponseEntity<>(orderItem, HttpStatus.ACCEPTED);
     }

@@ -5,5 +5,5 @@ import com.ad.ecommerceMultivBackend.model.SellerReport;
 
 public interface SellerReportService {
     SellerReport getSellerReport(Seller seller);
-    SellerReport updateSellerReport(SellerReport sellerReport);
+    void updateSellerReport(SellerReport sellerReport);
 }

@@ -1,6 +1,5 @@
 package com.ad.ecommerceMultivBackend.controller;
 
-import com.ad.ecommerceMultivBackend.config.JwtProvider;
 import com.ad.ecommerceMultivBackend.domain.AccountStatus;
 import com.ad.ecommerceMultivBackend.model.Seller;
 import com.ad.ecommerceMultivBackend.model.SellerReport;
@@ -88,7 +87,7 @@ public class SellerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Seller>> getAllSellers(@RequestParam(required = false) AccountStatus status) throws Exception {
+    public ResponseEntity<List<Seller>> getAllSellers(@RequestParam(required = false) AccountStatus status) {
         List<Seller> sellers = sellerService.getAllSellers(status);
         return ResponseEntity.ok(sellers);
     }

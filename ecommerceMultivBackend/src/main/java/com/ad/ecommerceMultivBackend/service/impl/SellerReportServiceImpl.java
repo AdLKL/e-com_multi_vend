@@ -24,7 +24,7 @@ public class SellerReportServiceImpl implements SellerReportService {
     }
 
     @Override
-    public SellerReport updateSellerReport(SellerReport sellerReport) {
-        return sellerReportRepository.save(sellerReport);
+    public void updateSellerReport(SellerReport sellerReport) {
+        sellerReportRepository.save(sellerReport);
     }
 }
