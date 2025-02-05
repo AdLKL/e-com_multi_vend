@@ -47,5 +47,5 @@ public class Product {
     private String sizes;
 
     @OneToMany(mappedBy = "product", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Review> review = new ArrayList<>();
+    private List<Review> reviews = new ArrayList<>();
 }
