@@ -16,6 +16,7 @@ code {
   font-family: "Pacifico", serif;
   font-weight: 400;
   font-style: normal;
+  color: #00927c
 }
 
 @import "tailwindcss/base";
