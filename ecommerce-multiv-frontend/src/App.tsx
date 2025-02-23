@@ -5,6 +5,8 @@ import { ThemeProvider } from '@mui/material';
 import customTheme from './theme/CustomTheme.ts';
 import Home from './customer/pages/home/Home.tsx';
 import Product from './customer/pages/product/Product.tsx';
+import ProductDetails from './customer/pages/product_details/ProductDetails.tsx';
+import Review from './customer/pages/review/Review.tsx';
 
 function App() {
   return (
@@ -12,7 +14,9 @@ function App() {
         <div>
           <Navbar/>
           {/* <Home/> */}
-          <Product/>
+          {/* <Product/> */}
+          {/* <ProductDetails/> */}
+          <Review/>
         </div>
       </ThemeProvider>
       
