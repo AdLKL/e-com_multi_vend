@@ -7,6 +7,7 @@ import Home from './customer/pages/home/Home.tsx';
 import Product from './customer/pages/product/Product.tsx';
 import ProductDetails from './customer/pages/product_details/ProductDetails.tsx';
 import Review from './customer/pages/review/Review.tsx';
+import Cart from './customer/pages/cart/Cart.tsx';
 
 function App() {
   return (
@@ -16,7 +17,8 @@ function App() {
           {/* <Home/> */}
           {/* <Product/> */}
           {/* <ProductDetails/> */}
-          <Review/>
+          {/* <Review/> */}
+          <Cart/>
         </div>
       </ThemeProvider>
       
