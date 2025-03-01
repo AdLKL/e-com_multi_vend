@@ -9,6 +9,7 @@ import ProductDetails from './customer/pages/product_details/ProductDetails.tsx'
 import Review from './customer/pages/review/Review.tsx';
 import Cart from './customer/pages/cart/Cart.tsx';
 import Checkout from './customer/pages/checkout/Checkout.tsx';
+import Account from './customer/pages/account/Account.tsx';
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
           {/* <ProductDetails/> */}
           {/* <Review/> */}
           {/* <Cart/> */}
-          <Checkout/>
+          {/* <Checkout/> */}
+          <Account/>
         </div>
       </ThemeProvider>
       
